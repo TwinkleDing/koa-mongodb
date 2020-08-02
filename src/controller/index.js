@@ -9,4 +9,4 @@ module.exports = {
   other,
   leave,
   img
-}
+};

@@ -5,9 +5,9 @@ module.exports = {
     // 上传图片
     async upload(ctx, next) {
         let { content = '' } = ctx.request.body;
-        console.error(ctx)
+        console.log(ctx);
         try {
-            let date = new Date().getTime()
+            let date = new Date().getTime();
             let filePath ='http://localhost:3333/api/upload/'+date
             let comment = new Img({
                 id: date,
@@ -32,12 +32,12 @@ module.exports = {
             ctx.body = {
                 code: 500,
                 msg: '上传失败，服务器异常，请稍后再试!'
-            }
+            };
         }
     },
     // 读取图片
     async getFile(ctx, next) {
-        let id = ctx.url.split('/')[3]
+        let id = ctx.url.split('/')[3];
         try {
             let res = await Img.findOne({id})
             let imgs = res.content
@@ -59,5 +59,4 @@ module.exports = {
             }
         }
     },
-  
-}
+};

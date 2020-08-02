@@ -30,7 +30,7 @@ module.exports = {
 
 function rand(min, max) {
   return Math.random()*(max-min+1) + min | 0; //特殊的技巧，|0可以强制转换为整数
-}
+};
 
 function makeCapcha() {
   var img = new BMP24(100, 40);
@@ -73,4 +73,4 @@ function makeCapcha() {
       x += f.w + rand(2, 8);
   }
   return {code:str,img}
-}
+};

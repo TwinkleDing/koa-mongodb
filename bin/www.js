@@ -1,4 +1,4 @@
-const app = require('../app');
+const app = require('../src/app');
 const debug = require('debug')('demo:server');
 const http = require('http');
 
@@ -6,6 +6,7 @@ const http = require('http');
 const port = normalizePort( process.env.PORT || "3333");
 const server = http.createServer(app.callback());
 
+// 监听端口号
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);

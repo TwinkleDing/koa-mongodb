@@ -2,7 +2,7 @@ const User = require('../db').User;
 const sha1 = require('sha1');
 const { PWD_ENCODE_STR} = require('../utils/config');
 const {create_token, check_token_code} = require('../utils/token');
-const xss = require('xss')
+const xss = require('xss');
 
 module.exports = {
   // 用户注册
@@ -187,4 +187,4 @@ module.exports = {
       }
     }
   }
-}
+};

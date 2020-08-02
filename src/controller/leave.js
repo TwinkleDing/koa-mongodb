@@ -1,5 +1,5 @@
-const Comment = require('../db').Comment
-const User = require('../db').User
+const Comment = require('../db').Comment;
+const User = require('../db').User;
 const xss = require("xss");
 
 module.exports = {
@@ -47,7 +47,6 @@ module.exports = {
        msg: "获取留言失败，服务器异常，请稍后再试！"
      }
    }
-
   },
   // 添加留言
   async addLeaver(ctx, next) {
@@ -121,4 +120,4 @@ module.exports = {
       }
     }
   }
-}
+};
