@@ -1,11 +1,4 @@
 # koa-mongodb
-node+koa+mongodb的后端
+node+koa+mongodb的后端学习
 
-## process
-process核心模块提供了一种便利的的方法，可以以编程的方式退出node.js：pprocess.exit()。
-w
-w
- - 12
- 2  
-2
- 2
+已经创建了数据库和数个集合，在学习node.js相关语法
