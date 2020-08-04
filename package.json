@@ -9,6 +9,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "axios": "^0.19.2",
     "chalk": "^4.1.0",
     "colors": "^1.4.0",
     "cowsay": "^1.4.0",
