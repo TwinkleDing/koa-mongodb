@@ -14,44 +14,71 @@
 // })
 
 
-
 // 使用Node.js发送请求
 
 /* 发送get请求 */
 // AppKey：db770397961dcef1b61daa5b61538815
-const https = require('https')
-const fs = require("fs")
-const options = {
-  hostname: 'v.juhe.cn',
-  path: '/toutiao/index?type=top&key=db770397961dcef1b61daa5b61538815',
-  method: 'GET',
-}
-const req = https.request(options, res => {
-    let a = 0
-    res.on('data', d => {
-    a++
-    console.log(a)
-    // process.stdout.write(d)
-    // fs.writeFile('input.js', d,  function(err) {
-    //   if (err) {
-    //       return console.error(err);
-    //   }
-    //   console.log("数据写入成功！");
-    //   console.log("--------我是分割线-------------")
-    //   console.log("读取写入的数据！");
-    //   fs.readFile('input.js', function (err, data) {
-    //      if (err) {
-    //         return console.error(err);
-    //      }
-    //      console.log("异步读取文件数据: " + data.toString());
-    //   });
-    // });
+// const https = require('https')
+// const fs = require("fs")
+// const options = {
+//   hostname: 'v.juhe.cn',
+//   path: '/toutiao/index?type=top&key=db770397961dcef1b61daa5b61538815',
+//   method: 'GET',
+// }
+// const req = https.request(options, res => {
+//     let a = 0
+//     console.log(`statusCode: ${res.statusCode}`)
+//     res.on('data', d => {
+//     a++
+//     console.log(a)
+//     process.stdout.write(d)
+//     // fs.writeFile('input.js', d,  function(err) {
+//     //   if (err) {
+//     //       return console.error(err);
+//     //   }
+//     //   console.log("数据写入成功！");
+//     //   console.log("--------我是分割线-------------")
+//     //   console.log("读取写入的数据！");
+//     //   fs.readFile('input.js', function (err, data) {
+//     //      if (err) {
+//     //         return console.error(err);
+//     //      }
+//     //      console.log("异步读取文件数据: " + data.toString());
+//     //   });
+//     // });
+//   })
+// })
+// req.on('error', error => {
+//   console.error(error)
+// })
+// req.end()
+
+/* 发送get请求 */
+const axios = require('axios')
+const writeFile = require('./utils').writeFile;
+const readFile = require('./utils').readFile;
+axios
+  .get('http://v.juhe.cn/toutiao/index', {
+    params: {
+      type: 'top',
+      key: 'db770397961dcef1b61daa5b61538815'
+    }
   })
-})
-req.on('error', error => {
-  console.error(error)
-})
-req.end()
+  .then(res => {
+    return writeFile('input.js', JSON.stringify(res.data));
+  })
+  // .then(res => {
+  //   return readFile('input.js')
+  // })
+  // .then(res => {
+  //   console.log(res.toString())
+  // })
+  .then(res => {
+    console.log(res)
+  })
+  .catch(error => {
+    console.error(error)
+  })
 
 
 /* 发送post请求 */
