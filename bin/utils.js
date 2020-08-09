@@ -1,5 +1,5 @@
 const fs = require("fs")
-
+// 文件名的地址相对于启动node的地址
 // 写入文件
 exports.writeFile = (fileName, data) => {
   return new Promise((reslove, reject) => {
