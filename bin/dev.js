@@ -1,5 +1,6 @@
 // 命令行接收参数
 const args = require('minimist')(process.argv.slice(2));
+console.log(process.argv.slice(2))
 console.log(args)
 
 // 设置命令行输出颜色
