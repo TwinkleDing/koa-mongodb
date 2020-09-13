@@ -6,8 +6,7 @@
   "scripts": {
     "start": "node bin/www",
     "dev": "node bin/dev --name=joe --type=text",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "node bin/build"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "axios": "^0.19.2",
