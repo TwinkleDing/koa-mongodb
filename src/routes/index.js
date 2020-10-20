@@ -19,7 +19,7 @@ router.get('/', async (ctx, next) => {
 // 留言获取
 .get("/api/leave", controller.leave.getLeaves)
 // 删除留言
-.delete("/api/leave/:id", controller.leave.deleteLeaver)
+.delete("/api/leave", controller.leave.deleteLeaver)
 
 .post('/api/upload', controller.img.upload)
 .get('/api/upload', controller.img.getFile)

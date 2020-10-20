@@ -68,7 +68,7 @@ module.exports = {
     // 转义，防止xss攻击
     content = xss(content);
     try {
-      let user = await User.findOne({_id:ctx._id})
+      let user = await User.findOne({_id: ctx._id})
       let comment = new Comment({
         user_id: ctx._id,
         user_name: user.user_name,
@@ -98,9 +98,15 @@ module.exports = {
   },
   // 删除留言
   async deleteLeaver(ctx, next){
-    let _id = ctx.params.id;
+    let _id = ctx.request.body.id;
     try {
-      let res = await Comment.findOneAndDelete({_id,user_id: ctx._id});
+      let res = null;
+      if(_id.includes(',')) {
+        let itemCheckLists = _id.split(',');
+        res = await Comment.deleteMany({_id: {$in: itemCheckLists}});
+      }else {
+        res = await Comment.findOneAndDelete({_id,user_id: ctx._id});
+      }
       if(res == null){
         ctx.body = {
           code: 500,
