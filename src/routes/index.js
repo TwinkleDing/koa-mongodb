@@ -1,9 +1,13 @@
+const path = require('path');
 const router = require('koa-router')();
 const controller = require('../controller');
+const fs = require('../utils/utils');
 
 router.get('/', async (ctx, next) => {
   ctx.body = "hello world!";
 })
+/** 增删改查接口 BEGIN */
+
 // 用户注册
 .post("/api/user", controller.user.register)
 // 用户登录
@@ -23,5 +27,44 @@ router.get('/', async (ctx, next) => {
 
 .post('/api/upload', controller.img.upload)
 .get('/api/upload', controller.img.getFile)
+
+/** 增删改查接口 FINISH */
+
+/** 文件操作接口 begin */
+
+router.get('/api/file/list', (ctx, next) => {
+  ctx.body = fs.getDir(ctx.query.dirName)
+})
+.get('/api/file/path', (ctx, next) => {
+  ctx.body = path.resolve(ctx.query.dirName)
+})
+.post('/api/file/stat', (ctx, next) => {
+  let content = fs.statFile(ctx.request.body.file, 'sync')
+  ctx.body = content;
+})
+.post('/api/file/info', (ctx, next) => {
+  let content = fs.readFile(ctx.request.body.file, 'sync')
+  ctx.body = content;
+})
+.post('/api/file/add', (ctx, next) => {
+  let file = ctx.request.body.file;
+  let data = ctx.request.body.content;
+  let content = fs.writeFile(file, data);
+  ctx.body = content;
+})
+.post('/api/file/del', (ctx, next) => {
+  let content = fs.delFile(ctx.request.body.file, 'sync')
+  ctx.body = content;
+})
+.post('/api/file/mkdir', (ctx, next) => {
+  let content = fs.mkDir(ctx.request.body.file, 'sync')
+  ctx.body = content;
+})
+.post('/api/file/rmdir', (ctx, next) => {
+  let content = fs.rmlDir(ctx.request.body.file, 'sync')
+  ctx.body = content;
+})
+
+/** 文件操作接口 FINISH */
 
 module.exports = router;
