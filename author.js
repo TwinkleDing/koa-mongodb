@@ -1,4 +1,0 @@
-{
-  author: 'twinkleDing',
-  sex: 'man'
-}

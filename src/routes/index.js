@@ -57,11 +57,11 @@ router.get('/api/file/list', (ctx, next) => {
   ctx.body = content;
 })
 .post('/api/file/mkdir', (ctx, next) => {
-  let content = fs.mkDir(ctx.request.body.file, 'sync')
+  let content = fs.mkDir(ctx.request.body.dir, 'sync')
   ctx.body = content;
 })
 .post('/api/file/rmdir', (ctx, next) => {
-  let content = fs.rmlDir(ctx.request.body.file, 'sync')
+  let content = fs.rmlDir(ctx.request.body.dir, 'sync')
   ctx.body = content;
 })
 

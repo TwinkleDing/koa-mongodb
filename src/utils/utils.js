@@ -4,10 +4,10 @@ const path = require('path');
 // 写入文件
 const writeFile = (fileName, data) => {
   fs.writeFile(fileName, data,  err => {
-    if(err) {
+    if (err) {
       console.error(err);
       return err;
-    }else {
+    } else {
       return '数据写入成功！';
     }
   });
@@ -17,10 +17,10 @@ const writeFile = (fileName, data) => {
 const appendFile = (fileName, data) => {
   return new Promise((reslove, reject) => {
     fs.appendFile(fileName, data,  err => {
-      if(err) {
+      if (err) {
         console.error(err);
         reject(err);
-      }else {
+      } else {
         reslove('数据写入成功！');
       }
     });
@@ -29,10 +29,10 @@ const appendFile = (fileName, data) => {
 
 const reNameFile = (oldName, newName) => {
   fs.rename(oldName, newName, err => {
-    if(err) {
+    if (err) {
       console.error(err);
       return err;
-    }else {
+    } else {
       return '重命名成功！';
     }
   })
@@ -47,10 +47,10 @@ const reNameFile = (oldName, newName) => {
 const openFile = (fileName, flags) => {
   return new Promise((resolve, reject) => {
     fs.open(fileName, flags, function(err, fd) {
-      if(err) {
+      if (err) {
         console.error(err);
         reject(reject);
-      }else {
+      } else {
         console.log("文件打开成功！");     
         resolve(fd)
       }
@@ -64,10 +64,10 @@ const readFile = (fileName, sync) => {
     return fs.readFileSync(fileName, 'utf8');
   } else {
     fs.readFile(fileName, 'utf8', (err, data) => {
-      if(err) {
+      if (err) {
         console.error(err);
         return err;
-      }else {
+      } else {
         return err;
       }
     });
@@ -80,10 +80,10 @@ const statFile = (fileName, sync) => {
     return fs.statSync(fileName);
   } else {
     fs.stat(fileName, (err, data) => {
-      if(err) {
+      if (err) {
         console.error(err);
         return err;
-      }else {
+      } else {
         return err;
       }
     });
@@ -91,13 +91,18 @@ const statFile = (fileName, sync) => {
 }
 
 // 删除文件
-const delFile = (fileName) => {
-  fs.unlink(fileName, function(err) {
-    if (err) {
-      return console.error(err);
-    }
-    return "文件删除成功！";
-  });
+const delFile = (fileName, sync) => {
+  if (sync) {
+    fs.unlinkSync(fileName)
+    return '文件删除成功！';
+  } else {
+    fs.unlink(fileName, function(err){
+      if (err) {
+        return console.error(err);
+      }
+      return '文件删除成功！';
+    });
+  }
 }
 
 // 获取文件夹内容
@@ -114,9 +119,10 @@ const getDir = (dirName) => {
 
 // 新建文件夹
 const mkDir = (dirName, sync) => {
-  if(sync) {
-    return fs.mkdirSync(dirName);
-  }else {
+  if (sync) {
+    fs.mkdirSync(dirName);
+    return '目录创建成功。';
+  } else {
     fs.mkdir(dirName,function(err){
       if (err) {
         return console.error(err);
@@ -129,7 +135,8 @@ const mkDir = (dirName, sync) => {
 // 删除文件夹
 const rmlDir = (dirName, sync) => {
   if(sync) {
-    return fs.rmdirSync(dirName);
+    fs.rmdirSync(dirName);
+    return '目录删除成功。';
   }else {
     fs.rmdir(dirName,function(err){
       if (err) {
