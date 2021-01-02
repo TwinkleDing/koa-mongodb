@@ -125,6 +125,7 @@ module.exports = {
         msg: "登录成功!",
         data: {
           _id: res[0]._id,
+          user_id: res[0].user_id,
           user_name: res[0].user_name,
           avatar: res[0].avatar,
           token
