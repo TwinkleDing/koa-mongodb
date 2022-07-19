@@ -16,13 +16,7 @@ module.exports = {
         }
         return;
       }
-      // if(avatar == ''){
-      //   ctx.body = {
-      //     code: 401,
-      //     msg: "注册失败，请上传头像!"
-      //   }
-      //   return;
-      // }
+
       if(user_pwd.length < 5){
         ctx.body = {
           code: 401,
@@ -30,13 +24,6 @@ module.exports = {
         }
         return;
       }
-      // if(user_pwd != re_user_pwd){
-      //   ctx.body = {
-      //     code: 401,
-      //     msg: "注册失败，2次密码输入不一致!"
-      //   }
-      //   return;
-      // }
       
       // // 验证码判断
       // let mark = await check_token_code({token:code_token,code});

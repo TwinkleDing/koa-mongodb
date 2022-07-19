@@ -9,7 +9,7 @@ router.get('/', async (ctx, next) => {
 /** 增删改查接口 BEGIN */
 
 // 用户注册
-.post("/api/user", controller.user.register)
+.post("/api/user/register", controller.user.register)
 // 用户登录
 .post("/api/user/login", controller.user.login)
 // 根据用户_id查询用户
