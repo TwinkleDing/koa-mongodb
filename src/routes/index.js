@@ -1,7 +1,7 @@
 const path = require('path');
 const router = require('koa-router')();
 const controller = require('../controller');
-const fs = require('../utils/utils');
+const fs = require('../utils/file');
 
 router.get('/', async (ctx, next) => {
   ctx.body = "hello world!";

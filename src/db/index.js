@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 const url = "mongodb://localhost:27017/test";
-const db = mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, function(err){
+mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, function(err){
   if(err){
     console.log(err);
   }else{
-    console.log("Connection success!");
+    console.log("Mongoose Connection Success!");
   }
 })
 const Schema = mongoose.Schema; 
