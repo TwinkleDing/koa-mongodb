@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema; 
+const Schema = mongoose.Schema;
 
 // 留言
 let commentSchema = new Schema({
@@ -17,6 +17,6 @@ let commentSchema = new Schema({
         type: String,
         default: Date.now
     }
-  })
+})
 
 module.exports = commentSchema;
