@@ -3,9 +3,18 @@ const Schema = mongoose.Schema;
 
 // 图片
 let imgSchema = new Schema({
-  id: String,
-  filePath: String,
-  content: String,
+    id: {
+        type: String,
+        default: ""
+    },
+    filePath: {
+        type: String,
+        default: ""
+    },
+    content: {
+        type: String,
+        default: ""
+    },
 })
 
 module.exports = imgSchema;
