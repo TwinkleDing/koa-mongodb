@@ -68,7 +68,6 @@ module.exports = {
           code: 200,
           msg: "注册成功!",
           data: {
-            _id: res._id,
             userName,
             avatar,
           }
@@ -123,7 +122,6 @@ module.exports = {
         code: 200,
         msg: "登录成功!",
         data: {
-          _id: res[0]._id,
           userId: res[0].userId,
           userName: res[0].userName,
           avatar: res[0].avatar,
@@ -139,17 +137,18 @@ module.exports = {
     }
   },
   // 通过_id 获取用户信息
-  async query(ctx, next){
-    let _id = ctx.query._id;
-    if(_id.length != 24){
+  async query(ctx, next) {
+    console.log(ctx.query.userId)
+    let userId = ctx.query.userId;
+    if(!userId.length){
       ctx.body = {
         code: 401,
-        msg: '查询失败，_id错误！'
+        msg: '查询失败，userId错误！'
       }
       return;
     }
     try {
-      let res = await User.findOne({_id},{avatar:true,_id: true,userName:true});
+      let res = await User.findOne({userId},{avatar:true,userId: true,userName:true});
       ctx.body = {
         code: 200,
         msg: '查询成功！',
