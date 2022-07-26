@@ -3,9 +3,9 @@ const Schema = mongoose.Schema;
 
 // 用户
 let userSchema = new Schema({
-    user_name: String,
-    user_id: String,
-    user_pwd: String,
+    userName: String,
+    userId: String,
+    password: String,
     avatar: {
         type: String,
         default: ""

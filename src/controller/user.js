@@ -7,9 +7,9 @@ const xss = require('xss');
 module.exports = {
   // 用户注册
   async register(ctx, next){
-    let {user_name = '', user_id =　'', user_pwd = '', re_user_pwd = '', avatar = "", code = '', code_token = ''} = ctx.request.body;
+    let {userName = '', userId = '', password = '', rePassword = '', avatar = "", code = '', code_token = ''} = ctx.request.body;
     try {
-      if(user_name == '' || user_id == "" || user_pwd == ""){
+      if(userName == '' || userId == "" || password == ""){
         ctx.body = {
           code: 401,
           msg: "注册失败，请填写完整表单!"
@@ -23,20 +23,20 @@ module.exports = {
       //   }
       //   return;
       // }
-      if(user_pwd.length < 5){
+      if(password.length < 5){
         ctx.body = {
           code: 401,
           msg: '注册失败，密码最少为5位！'
         }
         return;
       }
-      // if(user_pwd != re_user_pwd){
-      //   ctx.body = {
-      //     code: 401,
-      //     msg: "注册失败，2次密码输入不一致!"
-      //   }
-      //   return;
-      // }
+      if(password !== rePassword){
+        ctx.body = {
+          code: 401,
+          msg: "注册失败，2次密码输入不一致!"
+        }
+        return;
+      }
       
       // // 验证码判断
       // let mark = await check_token_code({token:code_token,code});
@@ -48,8 +48,8 @@ module.exports = {
       //   return;
       // }
 
-      // 判断 user_id 是否重复
-      let res = await User.find({user_id});
+      // 判断 userId 是否重复
+      let res = await User.find({userId});
       if(res.length != 0){
         ctx.body = {
           code: 409,
@@ -57,11 +57,11 @@ module.exports = {
         }
         return;
       }
-      user_pwd = sha1(sha1(user_pwd + PWD_ENCODE_STR));
+      password = sha1(sha1(password + PWD_ENCODE_STR));
       // 防止xss攻击， 转义
-      user_name = xss(user_name);
-      let token = create_token(user_id);
-      let user = new User({user_id,user_name,user_pwd,avatar,token});
+      userName = xss(userName);
+      let token = create_token(userId);
+      let user = new User({userId,userName,password,avatar,token});
       res = await user.save();
       if(res._id != null){
         ctx.body = {
@@ -69,7 +69,7 @@ module.exports = {
           msg: "注册成功!",
           data: {
             _id: res._id,
-            user_name,
+            userName,
             avatar,
           }
         }
@@ -89,9 +89,9 @@ module.exports = {
   },
   // 用户登录
   async login(ctx, next){
-    let {user_id = '', user_pwd = '' , code = "" , code_token = ''} = ctx.request.body;
+    let {userId = '', password = '' , code = "" , code_token = ''} = ctx.request.body;
     try {
-      if(user_id == '' || user_pwd == ''){
+      if(userId == '' || password == ''){
         ctx.body = {
           code: 401,
           msg: "登录失败，请输入登录账号或密码!"
@@ -107,8 +107,8 @@ module.exports = {
       //   }
       //   return;
       // }
-      user_pwd = sha1(sha1(user_pwd + PWD_ENCODE_STR));
-      let res = await User.find({user_id,user_pwd});
+      password = sha1(sha1(password + PWD_ENCODE_STR));
+      let res = await User.find({userId,password});
       if(res.length == 0){
         ctx.body = {
           code: 401,
@@ -116,7 +116,7 @@ module.exports = {
         }
         return;
       }
-      let token = create_token(user_id);
+      let token = create_token(userId);
       res[0].token = token;
       res[0].save();
       ctx.body = {
@@ -124,8 +124,8 @@ module.exports = {
         msg: "登录成功!",
         data: {
           _id: res[0]._id,
-          user_id: res[0].user_id,
-          user_name: res[0].user_name,
+          userId: res[0].userId,
+          userName: res[0].userName,
           avatar: res[0].avatar,
           token
         }
@@ -149,7 +149,7 @@ module.exports = {
       return;
     }
     try {
-      let res = await User.findOne({_id},{avatar:true,_id: true,user_name:true});
+      let res = await User.findOne({_id},{avatar:true,_id: true,userName:true});
       ctx.body = {
         code: 200,
         msg: '查询成功！',

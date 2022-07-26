@@ -27,7 +27,7 @@ module.exports = {
         // 验证token是否过期
         let {str = ""} = await jwt.verify(token, TOKEN_ENCODE_STR);
         // 验证token与账号是否匹配
-        let res = await User.find({user_id:str,token});
+        let res = await User.find({userId:str,token});
         if(res.length == 0){
           ctx.response.status = 401;
           ctx.response.body = "登录过期，请重新登录!";

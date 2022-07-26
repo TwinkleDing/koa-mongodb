@@ -3,11 +3,11 @@ const Schema = mongoose.Schema;
 
 // 留言
 let commentSchema = new Schema({
-    user_id: {
+    userId: {
         type: mongoose.Schema.ObjectId,
         ref: 'User'
     },
-    user_name: String,
+    userName: String,
     avatar: {
         type: String,
         default: ""

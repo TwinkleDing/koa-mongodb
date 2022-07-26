@@ -22,8 +22,8 @@ module.exports = {
       limit: Number(size),
       sort:{"create_time":sort === 'zheng' ? 1 : -1},
       // populate: {
-      //   path: 'user_id',
-      //   select: "_id user_name avatar"
+      //   path: 'userId',
+      //   select: "_id userName avatar"
       // }
     }
     let res = await Comment.find({},null,options);
@@ -70,8 +70,8 @@ module.exports = {
     try {
       let user = await User.findOne({_id: ctx._id})
       let comment = new Comment({
-        user_id: ctx._id,
-        user_name: user.user_name,
+        userId: ctx._id,
+        userName: user.userName,
         avatar: user.avatar,
         content
       });
@@ -105,7 +105,7 @@ module.exports = {
         let itemCheckLists = _id.split(',');
         res = await Comment.deleteMany({_id: {$in: itemCheckLists}});
       }else {
-        res = await Comment.findOneAndDelete({_id,user_id: ctx._id});
+        res = await Comment.findOneAndDelete({_id,userId: ctx._id});
       }
       if(res == null){
         ctx.body = {
