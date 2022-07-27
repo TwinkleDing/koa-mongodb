@@ -1,12 +1,14 @@
 const Koa = require('koa');
 const json = require('koa-json');
 const onerror = require('koa-onerror');
+const koaBody = require('koa-body');
 const bodyparser = require('koa-bodyparser');
 const logger = require('koa-logger');
 const cors = require('koa2-cors');
 const http = require('http');
 const chalk = require('chalk');
 const debug = require('debug')('demo:server');
+const path = require('path');
 const {
   check_token
 } = require('./utils/token');
@@ -25,6 +27,17 @@ onerror(app);
 // 添加post请求处理
 app.use(bodyparser({
   enableTypes: ['json', 'form', 'text']
+}))
+
+app.use(koaBody({
+  multipart: true,
+  formidable: {
+    //上传文件存储目录
+    uploadDir: path.join(__dirname, `../public/uploads/`),
+    //允许保留后缀名
+    keepExtensions: true,
+    multipart: true,
+  }
 }))
 app.use(json()) // 添加json处理
 app.use(logger()) // 添加日志

@@ -15,6 +15,10 @@ let imgSchema = new Schema({
         type: String,
         default: ""
     },
+    userId: {
+        type: String,
+        default: ""
+    },
 })
 
 module.exports = imgSchema;

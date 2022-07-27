@@ -8,7 +8,7 @@ const writeFile = (fileName, data) => {
       console.error(err);
       return err;
     } else {
-      return '数据写入成功！';
+      return '200';
     }
   });
 }
