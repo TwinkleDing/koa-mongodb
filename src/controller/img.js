@@ -1,7 +1,6 @@
 const xss = require("xss");
 const Img = require('../db').Img;
 const User = require('../db').User;
-const writeFile = require("../utils/file").writeFile
 
 module.exports = {
     // 上传头像
@@ -12,13 +11,10 @@ module.exports = {
             token
         });
         try {
-            let id = user.userId + "" + new Date().getTime();
-            
-            const res = await writeFile(id, Buffer.allocUnsafe(file))
-            user.avatar = file.filePath
-            user.save();
-
-            if (res === '200') {
+            if (file.filepath) {
+                // 将图片添加到 个人信息中
+                user.avatar = file.filepath
+                user.save();
                 ctx.body = {
                     code: 200,
                     msg: '上传成功！'
@@ -33,7 +29,8 @@ module.exports = {
             console.error(e);
             ctx.body = {
                 code: 500,
-                msg: '上传失败，服务器异常，请稍后再试!'
+                msg: '上传失败，服务器异常，请稍后再试!',
+                data: e
             };
         }
     },
