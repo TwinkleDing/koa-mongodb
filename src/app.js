@@ -23,11 +23,11 @@ const {
 // 错误处理
 onerror(app);
 
-/** 添加中间件 */
-// 添加post请求处理
-app.use(bodyparser({
-  enableTypes: ['json', 'form', 'text']
-}))
+// /** 添加中间件 */
+// // 添加post请求处理
+// app.use(bodyparser({
+//   enableTypes: ['json', 'form', 'text']
+// }))
 
 app.use(koaBody({
   multipart: true,
