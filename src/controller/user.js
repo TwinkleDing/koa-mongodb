@@ -128,7 +128,7 @@ module.exports = {
         userId,
         password
       });
-      if (res) {
+      if (!res) {
         ctx.body = {
           code: 401,
           msg: '登录失败，用户名或者密码错误!'
@@ -172,7 +172,11 @@ module.exports = {
       }, {
         avatar: true,
         userId: true,
-        userName: true
+        userName: true,
+        sex: true,
+        age: true,
+        position: true,
+        department: true,
       });
       ctx.body = {
         code: 200,
