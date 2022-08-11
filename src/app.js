@@ -1,4 +1,5 @@
 const Koa = require('koa');
+const KoaStatic = require('koa-static');
 const json = require('koa-json');
 const onerror = require('koa-onerror');
 const koaBody = require('koa-body');
@@ -28,12 +29,11 @@ onerror(app);
 // app.use(bodyparser({
 //   enableTypes: ['json', 'form', 'text']
 // }))
-
 app.use(koaBody({
   multipart: true,
   formidable: {
     //上传文件存储目录
-    uploadDir: path.join(__dirname, `../public/uploads/`),
+    uploadDir: path.join(__dirname, `../public/images`),
     //允许保留后缀名
     keepExtensions: true,
     multipart: true,
@@ -41,7 +41,11 @@ app.use(koaBody({
 }))
 app.use(json()) // 添加json处理
 app.use(logger()) // 添加日志
-app.use(require('koa-static')(__dirname + '/public')) // 添加静态资源处理
+app.use(KoaStatic(path.join(__dirname, '../public')), {
+  index: false, // 默认为true 访问的文件为index.html 可以修改为别的文件名或者false
+  hidden: false, // 是否同意传输隐藏文件
+  defer: true, // 如果为true，则在返回next()之后进行服务，从而允许后续中间件先进行响应
+}) // 添加静态资源处理
 app.use(cors()) // 添加cors跨域访问
 app.use(check_token); // 添加token 验证中间件
 

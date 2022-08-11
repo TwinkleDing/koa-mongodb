@@ -5,12 +5,14 @@ module.exports = {
     // 上传头像
     async upload(ctx, next) {
         let file = ctx.request.files.file
+        let filePath = 'http://' + ctx.header.host + "/images/" + file.newFilename
+
         try {
             if (file.filepath) {
                 ctx.body = {
                     code: 200,
                     msg: '上传成功！',
-                    data: file.filepath
+                    data: filePath
                 }
             } else {
                 ctx.body = {
