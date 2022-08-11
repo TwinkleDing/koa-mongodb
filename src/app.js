@@ -68,7 +68,8 @@ app.on('error', (err, ctx) => {
 
 /**服务器 */
 // 设置端口号
-const port = normalizePort(process.env.PORT || "3333");
+process.env.PORT = process.env.PORT || "3333"
+const port = normalizePort(process.env.PORT);
 const server = http.createServer(app.callback());
 
 function onListening() {

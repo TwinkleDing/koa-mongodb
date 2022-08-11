@@ -1,11 +1,14 @@
 const xss = require("xss");
 const Img = require('../db').Img;
 
+const {
+    getIpAddress,
+} = require('../utils/app.js');
 module.exports = {
     // 上传头像
     async upload(ctx, next) {
         let file = ctx.request.files.file
-        let filePath = 'http://' + ctx.header.host + "/images/" + file.newFilename
+        let filePath = 'http://' + getIpAddress() + ":" + process.env.PORT + "/images/" + file.newFilename
 
         try {
             if (file.filepath) {
