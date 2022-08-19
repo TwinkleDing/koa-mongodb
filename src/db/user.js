@@ -19,7 +19,15 @@ let userSchema = new Schema({
         type: String,
         default: ""
     },
+    departmentName: {
+        type: String,
+        default: ""
+    },
     position: {
+        type: String,
+        default: ""
+    },
+    positionName: {
         type: String,
         default: ""
     },

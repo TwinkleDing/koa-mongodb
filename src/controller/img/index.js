@@ -1,9 +1,9 @@
 const xss = require("xss");
-const Img = require('../db').Img;
+const Img = require('../../db').Img;
 
 const {
     getIpAddress,
-} = require('../utils/app.js');
+} = require('../../utils/app.js');
 module.exports = {
     // 上传头像
     async upload(ctx, next) {

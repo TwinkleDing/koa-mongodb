@@ -1,5 +1,5 @@
-const Comment = require('../db').Comment;
-const User = require('../db').User;
+const Comment = require('../../db').Comment;
+const User = require('../../db').User;
 const xss = require("xss");
 
 module.exports = {

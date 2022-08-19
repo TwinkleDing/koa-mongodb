@@ -1,12 +1,16 @@
-const User = require('../db').User;
+const User = require('../../db').User;
+const {
+  POSITION_NAME,
+  DEPARTMENT_NAME
+} = require('./KeyWord')
 const sha1 = require('sha1');
 const {
   PWD_ENCODE_STR
-} = require('../utils/config');
+} = require('../../utils/config');
 const {
   create_token,
   check_token_code
-} = require('../utils/token');
+} = require('../../utils/token');
 const xss = require('xss');
 
 module.exports = {
@@ -237,6 +241,8 @@ module.exports = {
         user.sex = sex;
         user.position = position;
         user.department = department;
+        user.positionName = POSITION_NAME[position];
+        user.departmentName = DEPARTMENT_NAME[department];
         await user.save();
         ctx.body = {
           code: 200,
@@ -249,6 +255,8 @@ module.exports = {
             sex,
             position,
             department,
+            positionName,
+            departmentName,
           }
         }
       } else {

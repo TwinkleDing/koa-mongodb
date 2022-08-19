@@ -1,6 +1,6 @@
 const BMP24 = require('gd-bmp').BMP24;
-const {create_token} = require('../utils/token');
-const Checkcode = require('../db').Checkcode;
+const {create_token} = require('../../utils/token');
+const Checkcode = require('../../db').Checkcode;
 
 module.exports = {
   // 验证码获取
