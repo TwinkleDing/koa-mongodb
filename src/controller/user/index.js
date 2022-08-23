@@ -205,7 +205,17 @@ module.exports = {
           delete query[key];
         }
       }
-      let res = await User.find(query);
+      let res = await User.find(query, {
+        avatar: true,
+        userId: true,
+        userName: true,
+        sex: true,
+        age: true,
+        position: true,
+        positionName: true,
+        department: true,
+        departmentName: true,
+      });
       ctx.body = {
         code: 200,
         msg: '查询成功！',
