@@ -6,7 +6,7 @@ const User = require('../db').User
 module.exports = {
   // 生成登录 token
   create_token(str){
-    return jwt.sign({str},TOKEN_ENCODE_STR, {expiresIn: '1h'});
+    return jwt.sign({str},TOKEN_ENCODE_STR, {expiresIn: '4h'});
   },
   /*  
     验证登录 token 是否正确  => 写成中间件
