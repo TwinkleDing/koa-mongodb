@@ -15,9 +15,11 @@ router.get('/', async (ctx, next) => {
   // 更新用户
   .post("/api/user/update", controller.user.update)
   // 根据用户_id查询用户
-  .get('/api/user', controller.user.query)
+  .get('/api/user', controller.user.getUser)
+  // 根据用户_id查询用户
+  .post('/api/user/add', controller.user.addUser)
   // 查询用户列表
-  .get('/api/userList', controller.user.getUser)
+  .get('/api/userList', controller.user.getUserList)
   // 验证码获取
   .get('/api/other/checkcode', controller.other.checkcode)
   // 添加留言

@@ -5,7 +5,8 @@ const {
 } = require('./KeyWord')
 const sha1 = require('sha1');
 const {
-  PWD_ENCODE_STR
+  PWD_ENCODE_STR,
+  DEFAULT_PASSWORD
 } = require('../../utils/config');
 const {
   create_token,
@@ -161,7 +162,7 @@ module.exports = {
     }
   },
   // 通过_id 获取用户信息
-  async query(ctx, next) {
+  async getUser(ctx, next) {
     let userId = ctx.query.userId;
     if (!userId.length) {
       ctx.body = {
@@ -196,16 +197,20 @@ module.exports = {
     }
   },
   // 获取用户列表
-  async getUser(ctx, next) {
+  async getUserList(ctx, next) {
     try {
       let query = ctx.query
-      for (const key in query) {
-        const element = query[key];
-        if (element === '') {
-          delete query[key];
+      // for (const key in query) {
+      //   const element = query[key];
+      //   if (element === '') {
+      //     delete query[key];
+      //   }
+      // }
+      let res = await User.find({
+        userName: {
+          "$regex": query.userName
         }
-      }
-      let res = await User.find(query, {
+      }, {
         avatar: true,
         userId: true,
         userName: true,
@@ -229,6 +234,7 @@ module.exports = {
       }
     }
   },
+  // 更新用户信息
   async update(ctx, next) {
     let {
       userId = '',
@@ -279,6 +285,49 @@ module.exports = {
       ctx.body = {
         code: 500,
         msg: e
+      }
+    }
+  },
+  // 新增用户
+  async addUser(ctx, next) {
+    const data = ctx.request.body
+    try {
+
+      // 判断 userId 是否重复
+      let res = await User.findOne({
+        userId: data.userId
+      });
+      if (res) {
+        ctx.body = {
+          code: 409,
+          msg: '新增失败，登录账号重复了，换一个吧！'
+        }
+        return;
+      }
+      data.password = sha1(sha1(DEFAULT_PASSWORD + PWD_ENCODE_STR));
+      data.token = create_token(data.userId);
+      data.positionName = POSITION_NAME[data.position];
+      data.departmentName = DEPARTMENT_NAME[data.department];
+      let user = new User({
+        ...data
+      });
+      res = await user.save();
+      if (res._id != null) {
+        ctx.body = {
+          code: 200,
+          msg: "新增成功!"
+        }
+      } else {
+        ctx.body = {
+          code: 500,
+          msg: "新增失败，服务器异常!"
+        }
+      }
+    } catch (e) {
+      console.error(e);
+      ctx.body = {
+        code: 500,
+        msg: "新增失败，服务器异常！"
       }
     }
   }
