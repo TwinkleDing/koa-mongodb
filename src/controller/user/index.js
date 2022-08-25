@@ -21,7 +21,7 @@ module.exports = {
 			if (userName == "" || userId == "" || password == "") {
 				ctx.body = {
 					code: 401,
-					msg: "注册失败，请填写完整表单!",
+					msg: "注册失败，请填写完整表单！",
 				};
 				return;
 			}
@@ -35,7 +35,7 @@ module.exports = {
 			if (password !== rePassword) {
 				ctx.body = {
 					code: 401,
-					msg: "注册失败，2次密码输入不一致!",
+					msg: "注册失败，2次密码输入不一致！",
 				};
 				return;
 			}
@@ -76,7 +76,7 @@ module.exports = {
 			if (res._id != null) {
 				ctx.body = {
 					code: 200,
-					msg: "注册成功!",
+					msg: "注册成功！",
 					data: {
 						userName,
 						avatar,
@@ -85,7 +85,7 @@ module.exports = {
 			} else {
 				ctx.body = {
 					code: 500,
-					msg: "注册失败，服务器异常!",
+					msg: "注册失败，服务器异常！",
 				};
 			}
 		} catch (e) {
@@ -103,7 +103,7 @@ module.exports = {
 			if (userId == "" || password == "") {
 				ctx.body = {
 					code: 401,
-					msg: "登录失败，请输入登录账号或密码!",
+					msg: "登录失败，请输入登录账号或密码！",
 				};
 				return;
 			}
@@ -124,7 +124,7 @@ module.exports = {
 			if (!res) {
 				ctx.body = {
 					code: 401,
-					msg: "登录失败，用户名或者密码错误!",
+					msg: "登录失败，用户名或者密码错误！",
 				};
 				return;
 			}
@@ -133,7 +133,7 @@ module.exports = {
 			res.save();
 			ctx.body = {
 				code: 200,
-				msg: "登录成功!",
+				msg: "登录成功！",
 				data: {
 					userId: res.userId,
 					userName: res.userName,
@@ -145,7 +145,7 @@ module.exports = {
 			console.error(e);
 			ctx.body = {
 				code: 500,
-				msg: "登录失败，服务器异常!",
+				msg: "登录失败，服务器异常！",
 			};
 		}
 	},
@@ -183,7 +183,7 @@ module.exports = {
 			console.error(e);
 			ctx.body = {
 				code: 500,
-				msg: "查询失败，服务器异常，请稍后再试!",
+				msg: "查询失败，服务器异常，请稍后再试！",
 			};
 		}
 	},
@@ -224,7 +224,7 @@ module.exports = {
 			console.error(e);
 			ctx.body = {
 				code: 500,
-				msg: "查询失败，服务器异常，请稍后再试!",
+				msg: "查询失败，服务器异常，请稍后再试！",
 			};
 		}
 	},
@@ -244,18 +244,19 @@ module.exports = {
 				userId,
 			});
 			if (user) {
-				user.avatar = avatar;
+				user.avatar = avatar || user.avatar;
 				user.userName = userName;
 				user.age = age;
 				user.sex = sex;
 				user.position = position;
 				user.department = department;
-				user.positionName = POSITION_NAME[position];
-				user.departmentName = DEPARTMENT_NAME[department];
+				user.positionName = position && POSITION_NAME[position];
+				user.departmentName = position && DEPARTMENT_NAME[department];
 				await user.save();
+
 				ctx.body = {
 					code: 200,
-					msg: "修改成功!",
+					msg: "修改成功！",
 					data: {
 						userId,
 						avatar,
@@ -271,14 +272,14 @@ module.exports = {
 			} else {
 				ctx.body = {
 					code: 500,
-					msg: "用户不存在，修改失败!",
+					msg: "修改失败，服务器异常！",
 				};
 			}
 		} catch (e) {
 			console.error(e);
 			ctx.body = {
 				code: 500,
-				msg: "新增失败，服务器异常！",
+				msg: "修改失败，服务器异常！",
 			};
 		}
 	},
@@ -308,12 +309,12 @@ module.exports = {
 			if (res._id != null) {
 				ctx.body = {
 					code: 200,
-					msg: "新增成功!",
+					msg: "新增成功！",
 				};
 			} else {
 				ctx.body = {
 					code: 500,
-					msg: "新增失败，服务器异常!",
+					msg: "新增失败，服务器异常！",
 				};
 			}
 		} catch (e) {
